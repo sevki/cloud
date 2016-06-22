@@ -1,24 +1,23 @@
 package main
 
 import (
-	"flag"
 	"log"
 	"net/http"
+	"os"
 
 	"sevki.org/cloud/reloader"
 )
 
 var (
-	user  = flag.String("user", "sevki", "user")
-	repo  = flag.String("repo", "cloud", "repo")
-	repourl   = flag.String("url", "https://github.com/sevki/cloud.git", "repo url")
-	token = flag.String("token", "", "github token")
+	user    = os.Getenv("USER")
+	repo    = os.Getenv("REPO")
+	repourl = os.Getenv("REPO_URL")
+	token   = os.Getenv("TOKEN")
 )
 
 func main() {
-	flag.Parse()
 
-	http.Handle("/", reloader.Setup(*user, *repo, *repourl, *token, NewWiki))
+	http.Handle("/", reloader.Setup(user, repo, repourl, token, NewWiki))
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
