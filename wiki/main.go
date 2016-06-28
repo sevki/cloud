@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"os"
 
-	"sevki.org/cloud/reloader"
+	"sevki.org/ghreloader"
 )
-
+	
 var (
 	user    = os.Getenv("USER")
 	repo    = os.Getenv("REPO")
