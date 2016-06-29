@@ -34,9 +34,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fs := mimeTypeHandler(http.FileServer(cloud.Dir(cache, strings.TrimPrefix(os.Getenv("BUCKET"), "gs://"))))
-	http.Handle("/", fs)
-	http.Handle("/_status", status)
+	fs := http.FileServer(cloud.Dir(cache, strings.TrimPrefix(os.Getenv("BUCKET"), "gs://")))
+
+	http.Handle("/", mimeTypeHandler(fs))
+	http.HandleFunc("/_status", status)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
