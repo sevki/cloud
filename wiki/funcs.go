@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"regexp"
 	"runtime"
 	"strings"
@@ -29,7 +30,9 @@ func init() {
 }
 
 var funcMap = template.FuncMap{
-	"gover":      gover,
+	"gover":    gover,
+	"hostname": hostname,
+
 	"now":        now,
 	"uptime":     uptime,
 	"atom":       getAtom,
@@ -76,7 +79,10 @@ func renderTime() string {
 func gover() string {
 	return runtime.Version()
 }
-
+func hostname() string {
+	h, _ := os.Hostname()
+	return h
+}
 func now() time.Time {
 	return time.Now()
 }
